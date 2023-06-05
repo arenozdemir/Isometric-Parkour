@@ -41,12 +41,10 @@ public class OnJumpState : BaseState
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Wall") && player.isBetweenWall)
+        if (player.isBetweenWall && other.TryGetComponent(out WallScrpit wall))
         {
-            Debug.Log("Wallll");
             betweenWall.nextWall = other.transform;
             GoToNextState(betweenWall);
-            
         }
     }
 }
