@@ -14,7 +14,7 @@ public class DasState : BaseState
     {
         timer += Time.deltaTime;
         playerRb.velocity = transform.forward * 40f;
-        if (timer >0.2f)
+        if (timer > 0.2f)
         {
             GoToNextState(groundState);
         }

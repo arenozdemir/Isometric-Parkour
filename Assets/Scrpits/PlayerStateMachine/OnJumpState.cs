@@ -9,9 +9,12 @@ public class OnJumpState : BaseState
     private float gravityMultiplier;
     [SerializeField] Transform _camera;
     [SerializeField] BaseState onGround;
+    [SerializeField] BaseState dashState;
     [SerializeField] BetweenToWallState betweenWall;
+    int jumpCount;
     private void OnEnable()
     {
+        jumpCount = 0;
         velocityY = jumpForce;
         player.isGrounded = false;
         playerRb.isKinematic = false;
@@ -36,7 +39,15 @@ public class OnJumpState : BaseState
         {
             GoToNextState(onGround);
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 1)
+        {
+            velocityY = jumpForce;
+            jumpCount++;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            GoToNextState(dashState);
+        }
 
     }
     private void OnTriggerEnter(Collider other)

@@ -6,39 +6,28 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform playerPos;
     [SerializeField] LayerMask obsticle;
-
-    float value;
-    
-    bool isObsticle;
-    bool isRotatingStarted;
-    
-    Quaternion beginRotation;
-    private void Start()
-    {
-        beginRotation = transform.rotation;
-    }
+    private Transform oldObsticle;
     private void Update()
     {
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 100f, obsticle))
         {
-            if (!isRotatingStarted)
-            {
-                isObsticle = true;
-                isRotatingStarted = true;
-            }
-        }
-        Rotation();
-    }
-
-    void Rotation()
-    {
-        if (isObsticle)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, -90, 0), Time.deltaTime * 15f);
+            oldObsticle = hit.transform;
+            SetObjectTransparency(hit.transform.GetComponent<MeshRenderer>().material, 0.3f);
         }
         else
         {
-            transform.rotation = beginRotation;
+            if (oldObsticle != null)
+            {
+                SetObjectTransparency(oldObsticle.GetComponent<MeshRenderer>().material, 1);
+                oldObsticle = null;
+            }
         }
     }
+    private void SetObjectTransparency(Material objectMaterial, float transparency)
+    {
+        Color color = objectMaterial.color;
+        color.a = transparency;
+        objectMaterial.color = color;
+    }
+
 }
