@@ -13,7 +13,11 @@ public class OnGroundState : BaseState
 
     private void OnEnable()
     {
-        player.isGrounded= true;
+        //player.isGrounded= true;
+        //Yavuz bunu kapattým çümkü oyunu kötü anlamda etkiliyor. Mesela biz playerscriptin içinde zaten karakter yere deðidiðinde isGroundu true yapýyoruz. 
+        //Ama örnek veriyorum bu açýk kaldýðýnda diyelim ki zýpladým ve havada dash attým dashten hemen sonra OnGroundaState'e geçiyor ve havadayken 
+        //isGrounded true olmuþ oluyor, ve ben havada defalarca tekrar tekrar zýplayabiliyorum. Çünkü tekrar zýplamak için tek þartýmýz isGroundedin true olmasý.
+        //(Þu an sorunsuz çalýþýyor)
     }
     void Update()
     {

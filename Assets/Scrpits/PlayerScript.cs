@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody playerRb;
     [SerializeField] Transform camera;
     public bool isGrounded;
-    private int jumpCount;
+    public static int jumpCount;
     private bool isDashed;
     private float dashTimer;
     private float velocityY;
@@ -15,11 +15,16 @@ public class PlayerScript : MonoBehaviour
     private float gravityMultiplier;
 
     public bool isBetweenWall;
+    
     private void Awake()
     {
+        
         playerRb = GetComponent<Rigidbody>();
     }
- 
+    private void Update()
+    {
+        Debug.Log(jumpCount);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

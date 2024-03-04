@@ -15,16 +15,19 @@ public class BetweenToWallState : BaseState
     }
     void Update()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, ground))
-        {
-            GoToNextState(onGround);
-        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.isKinematic = false;
             Vector3 dir = nextWall.forward;
             player.transform.forward = dir;
             playerRb.velocity = 10 * dir + Vector3.up * 6f;
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, ground))
+        {
+            GoToNextState(onGround);
         }
     }
     private void OnTriggerEnter(Collider other)

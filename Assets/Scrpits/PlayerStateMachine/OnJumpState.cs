@@ -12,13 +12,12 @@ public class OnJumpState : BaseState
     [SerializeField] BaseState onGround;
     [SerializeField] BaseState dashState;
     [SerializeField] BetweenToWallState betweenWall;
-    int jumpCount;
     private void OnEnable()
     {
-        jumpCount = 0;
         velocityY = jumpForce;
         player.isGrounded = false;
         playerRb.isKinematic = false;
+        PlayerScript.jumpCount = 1;
     }
     void Update()
     {
@@ -40,10 +39,13 @@ public class OnJumpState : BaseState
         {
             GoToNextState(onGround);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 1)
+        if (Input.GetKeyDown(KeyCode.Space) && PlayerScript.jumpCount < 2)
         {
+            //Yavuz jump count deðerini bilerek static yaptým çünkü jump datasýnýn tek bir yerde depolanmasý lazým. Mesela havada bir kez zýpladým ve dash attým bu dashten
+            //sonra tekrardan havada 1 kez zýplayabilmem lazým ama. Ama biz burada nesne üzerinden iþlem yaptýðýmýz için OnJumpState tekrar enable olduðunda eski veriyi tutmuyor
+            
+            PlayerScript.jumpCount++;
             velocityY = jumpForce;
-            jumpCount++;
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
